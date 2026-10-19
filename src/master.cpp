@@ -36,6 +36,23 @@ void scan_Units() {
 
     // das Scan Packet wird geschickt
     sendSerial.write((uint8_t*)&packet, sizeof(packet));
+
+    // hier wird gewartet, bis das Packet wieder beim master angekommen ist
+    if (sendSerial.available() >= sizeof(packet)) {
+        Packet recv_packet; // hier werden die empfangenen Daten reingeschrieben
+
+        // Daten werden in recv_packet geschrieben
+        sendSerial.readBytes((uint8_t*)&recv_packet, sizeof(recv_packet));
+
+        Serial.println("Einträge insgesamt: ");
+        Serial.println(recv_packet.num_units);
+
+        // Ausagbe der Liste
+        for (int i = 0;  i < recv_packet.num_units; i++) {
+            Serial.println("Einheit mit der Id: ");
+            Serial.println(recv_packet.liste[i].id);
+        }
+    }
 }
 
 void setup() {
