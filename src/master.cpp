@@ -12,7 +12,7 @@ public:
         id = u;
     }
 
-}
+};
 
 // Pin Belegung fuer das Senden mit Softwareserial 
 const int rxPin = 10;
